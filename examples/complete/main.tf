@@ -10,20 +10,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-resource "random_integer" "cake_pos" {
-  max = var.length - 2
-  min = 1
+module "resource_names" {
+  source = "git::https://github.com/nexient-llc/tf-module-resource_name.git?ref=1.1.1"
+
+  for_each = var.resource_names_map
+
+  logical_product_family  = var.product_family
+  logical_product_service = var.product_service
+  region                  = var.region
+  class_env               = var.environment
+  cloud_resource_type     = each.value.name
+  instance_env            = var.environment_number
+  maximum_length          = each.value.max_length
 }
 
+module "resource_group" {
+  source = "git::https://github.com/nexient-llc/tf-azurerm-module_primitive-resource_group.git?ref=0.2.1"
 
-module "cake_prefix" {
-  source = "../.."
+  name     = module.resource_names["rg"].minimal_random_suffix
+  location = var.region
 
-  length = random_integer.cake_pos.result
+  tags = merge(var.tags, { resource_name = module.resource_names["rg"].standard })
+
 }
 
-module "cake_suffix" {
+module "monitor_workspace" {
   source = "../.."
 
-  length = (var.length - 1) - random_integer.cake_pos.result
+  name                = module.resource_names["monitor_workspace"].standard
+  resource_group_name = module.resource_group.name
+  location            = var.region
+
+  tags = var.tags
+
+  depends_on = [module.resource_group]
 }

@@ -10,17 +10,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-variable "length" {
-  type    = number
-  default = 24
+variable "name" {
+  description = "The name of the resource"
+  type        = string
 }
 
-variable "number" {
-  type    = bool
-  default = true
+variable "resource_group_name" {
+  description = "The name of the resource group in which the resource exists"
+  type        = string
 }
 
-variable "special" {
-  type    = bool
-  default = false
+variable "location" {
+  description = "The location/region of the resource"
+  type        = string
+  default     = "eastus"
+}
+
+variable "public_network_access_enabled" {
+  description = "Whether or not public network access is allowed for the storage account"
+  type        = bool
+  default     = true
+}
+
+variable "tags" {
+  description = "Tags for the resources"
+  type        = map(string)
+  default     = {}
 }

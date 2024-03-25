@@ -10,6 +10,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-output "string" {
-  value = random_string.string.result
+output "id" {
+  value = azurerm_monitor_workspace.monitor_workspace.id
+}
+
+output "name" {
+  value = azurerm_monitor_workspace.monitor_workspace.name
+}
+
+output "query_endpoint" {
+  value = azurerm_monitor_workspace.monitor_workspace.query_endpoint
+}
+
+output "default_data_collection_endpoint_id" {
+  value = azurerm_monitor_workspace.monitor_workspace.default_data_collection_endpoint_id
+}
+
+output "default_data_collection_rule_id" {
+  value = azurerm_monitor_workspace.monitor_workspace.default_data_collection_rule_id
 }

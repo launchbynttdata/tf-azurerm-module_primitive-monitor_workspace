@@ -10,22 +10,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-output "monitor_workspace_id" {
-  value = module.monitor_workspace.id
-}
+locals {
+  default_tags = {
+    provisioner = "terraform"
+  }
 
-output "monitor_workspace_name" {
-  value = module.monitor_workspace.name
-}
-
-output "resource_group_id" {
-  value = module.resource_group.id
-}
-
-output "resource_group_name" {
-  value = module.resource_group.name
-}
-
-output "query_endpoint" {
-  value = module.monitor_workspace.query_endpoint
+  tags = merge(
+    var.tags,
+    local.default_tags
+  )
 }
