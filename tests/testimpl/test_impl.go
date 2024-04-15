@@ -18,9 +18,9 @@ import (
 
 func TestComposableComplete(t *testing.T, ctx types.TestContext) {
 
-	subscriptionID := os.Getenv("AZURE_SUBSCRIPTION_ID")
+	subscriptionID := os.Getenv("ARM_SUBSCRIPTION_ID")
 	if len(subscriptionID) == 0 {
-		t.Fatalf("AZURE_SUBSCRIPTION_ID is not set in the environment variables")
+		t.Fatalf("ARM_SUBSCRIPTION_ID is not set in the environment variables")
 	}
 
 	credential, err := azidentity.NewDefaultAzureCredential(nil)
